@@ -82,20 +82,16 @@
       els.main.hidden = false;
 
       var range;
-      var chartConfig;
       var title;
 
       if (state.tab === 'all') {
         range = null;
-        chartConfig = MD.buildYearSeriesChartConfig(MD.seriesByYear(state.records));
-        title = '年別収支';
+        title = '収支比率';
       } else if (state.tab === 'year') {
         range = MD.rangeForYear(state.year);
-        chartConfig = MD.buildMonthSeriesChartConfig(MD.seriesByMonth(state.records, state.year));
         title = state.year + '年の月別収支';
       } else {
         range = MD.rangeForMonth(state.year, state.month);
-        chartConfig = MD.buildDaySeriesChartConfig(MD.seriesByDay(state.records, state.year, state.month));
         title = state.year + '年' + state.month + '月の日別収支';
       }
 
@@ -103,6 +99,15 @@
 
       var summary = MD.summarize(state.records, range);
       MD.renderSummary(els.summary, summary);
+
+      var chartConfig;
+      if (state.tab === 'all') {
+        chartConfig = MD.buildIncomeExpensePieChartConfig(summary.incomeSum, summary.expenseSum);
+      } else if (state.tab === 'year') {
+        chartConfig = MD.buildMonthSeriesChartConfig(MD.seriesByMonth(state.records, state.year));
+      } else {
+        chartConfig = MD.buildDaySeriesChartConfig(MD.seriesByDay(state.records, state.year, state.month));
+      }
 
       state.balanceChart = MD.renderBalanceChart(els.balanceCanvas, chartConfig, state.balanceChart);
       state.expenseCategoryChart = MD.renderCategory(

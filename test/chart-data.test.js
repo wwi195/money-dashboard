@@ -1,16 +1,12 @@
 var MD = typeof module === 'object' ? require('../chart-data.js') : window.MD;
 var T = typeof module === 'object' ? require('./harness.js') : window.MDTest;
 
-T.test('buildYearSeriesChartConfig: labels/data/凡例を組み立てる', function () {
-  var series = [
-    { key: '2025', incomeSum: 1000, expenseSum: -400, balance: 600 },
-    { key: '2026', incomeSum: 2000, expenseSum: -1500, balance: 500 }
-  ];
-  var config = MD.buildYearSeriesChartConfig(series);
-  T.assertEqual(config.type, 'bar');
-  T.assertEqual(config.data.labels, ['2025年', '2026年']);
-  T.assertEqual(config.data.datasets[0], { label: '収入', data: [1000, 2000], backgroundColor: '#2f9e59' });
-  T.assertEqual(config.data.datasets[1], { label: '支出', data: [400, 1500], backgroundColor: '#c0392b' });
+T.test('buildIncomeExpensePieChartConfig: 収入/支出の2枚のスライスを組み立てる', function () {
+  var config = MD.buildIncomeExpensePieChartConfig(5172910, -6009217);
+  T.assertEqual(config.type, 'pie');
+  T.assertEqual(config.data.labels, ['収入', '支出']);
+  T.assertEqual(config.data.datasets[0].data, [5172910, 6009217]);
+  T.assertEqual(config.data.datasets[0].backgroundColor, ['#2f9e59', '#c0392b']);
 });
 
 T.test('buildMonthSeriesChartConfig: キーからM月ラベルを作る', function () {

@@ -143,6 +143,8 @@ body {
 
 .chart-section canvas {
   max-height: 260px;
+  display: block;
+  margin: 0 auto;
 }
 
 .category-list {

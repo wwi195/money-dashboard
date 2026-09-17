@@ -80,20 +80,6 @@ T.test('summarize: 金額・日付が読めない記録はexcludedCountに数え
   T.assertEqual(s.excludedCount, 1);
 });
 
-T.test('seriesByYear: 年ごとに収入・支出・差額を集計する', function () {
-  var records = [
-    record('income', 'CCI', 1000000, new Date(2025, 5, 1)),
-    record('expense', '食費', -400000, new Date(2025, 5, 1)),
-    record('income', 'CCI', 1200000, new Date(2026, 5, 1)),
-    record('expense', '食費', -900000, new Date(2026, 5, 1))
-  ];
-  var series = MD.seriesByYear(records);
-  T.assertEqual(series, [
-    { key: '2025', incomeSum: 1000000, expenseSum: -400000, balance: 600000 },
-    { key: '2026', incomeSum: 1200000, expenseSum: -900000, balance: 300000 }
-  ]);
-});
-
 T.test('seriesByMonth: 指定年のみを月別に集計する', function () {
   var records = [
     record('income', 'CCI', 300000, new Date(2026, 5, 25)),

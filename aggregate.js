@@ -10,7 +10,6 @@
 
   function pad(n) { return n < 10 ? '0' + n : String(n); }
 
-  function yearKey(date) { return String(date.getFullYear()); }
   function monthKey(date) { return date.getFullYear() + '-' + pad(date.getMonth() + 1); }
   function dayKey(date) { return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()); }
 
@@ -94,10 +93,6 @@
     });
   }
 
-  function seriesByYear(records) {
-    return buildSeries(filterValidRecords(records), yearKey);
-  }
-
   function seriesByMonth(records, year) {
     var scoped = filterValidRecords(records).filter(function (r) {
       return r.date.date.getFullYear() === year;
@@ -119,7 +114,6 @@
   }
 
   return {
-    yearKey: yearKey,
     monthKey: monthKey,
     dayKey: dayKey,
     rangeForYear: rangeForYear,
@@ -127,7 +121,6 @@
     filterValidRecords: filterValidRecords,
     filterByRange: filterByRange,
     summarize: summarize,
-    seriesByYear: seriesByYear,
     seriesByMonth: seriesByMonth,
     seriesByDay: seriesByDay,
     distinctYears: distinctYears

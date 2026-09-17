@@ -36,8 +36,20 @@
     };
   }
 
-  function buildYearSeriesChartConfig(series) {
-    return buildGroupedBarConfig(series.map(function (s) { return s.key + '年'; }), series);
+  function buildIncomeExpensePieChartConfig(incomeSum, expenseSum) {
+    return {
+      type: 'pie',
+      data: {
+        labels: ['収入', '支出'],
+        datasets: [{
+          data: [incomeSum, Math.abs(expenseSum)],
+          backgroundColor: [COLOR_INCOME, COLOR_EXPENSE]
+        }]
+      },
+      options: {
+        plugins: { legend: { display: true } }
+      }
+    };
   }
 
   function buildMonthSeriesChartConfig(series) {
@@ -80,7 +92,7 @@
   return {
     COLOR_INCOME: COLOR_INCOME,
     COLOR_EXPENSE: COLOR_EXPENSE,
-    buildYearSeriesChartConfig: buildYearSeriesChartConfig,
+    buildIncomeExpensePieChartConfig: buildIncomeExpensePieChartConfig,
     buildMonthSeriesChartConfig: buildMonthSeriesChartConfig,
     buildDaySeriesChartConfig: buildDaySeriesChartConfig,
     buildCategoryChartConfig: buildCategoryChartConfig
