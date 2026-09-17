@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>支出・収入ダッシュボード</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="error-banner" class="error-banner" hidden></div>
+<div id="empty-state" class="empty-state" hidden>記録がありません。</div>
+
+<div id="app-main" hidden>
+  <header id="period-filter" class="period-filter">
+    <button type="button" class="active" data-tab="all">全期間</button>
+    <button type="button" data-tab="year">年別</button>
+    <button type="button" data-tab="month">月別</button>
+  </header>
+
+  <div id="range-picker" class="range-picker" hidden>
+    <select id="year-select"></select>
+    <select id="month-select" hidden></select>
+  </div>
+
+  <section id="summary-tiles" class="summary-tiles"></section>
+
+  <section class="chart-section">
+    <h2 id="balance-chart-title">年別収支</h2>
+    <canvas id="balance-chart"></canvas>
+  </section>
+
+  <div class="charts-row">
+    <section class="chart-section">
+      <h2>支出カテゴリ別</h2>
+      <canvas id="expense-category-chart"></canvas>
+      <ul id="expense-category-list" class="category-list"></ul>
+    </section>
+
+    <section class="chart-section">
+      <h2>収入カテゴリ別</h2>
+      <canvas id="income-category-chart"></canvas>
+      <ul id="income-category-list" class="category-list"></ul>
+    </section>
+  </div>
+
+  <section class="record-list-section">
+    <h2>記録一覧</h2>
+    <div id="record-list" class="record-list"></div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="config.js"></script>
+<script src="parse.js"></script>
+<script src="aggregate.js"></script>
+<script src="chart-data.js"></script>
+<script src="render.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
