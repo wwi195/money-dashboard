@@ -108,6 +108,27 @@ T.test('seriesByDay: 指定年月のみを日別に集計する', function () {
   ]);
 });
 
+T.test('dateRangeOf: 有効な記録の最古日〜最新日を返す', function () {
+  var records = [
+    record('income', 'CCI', 1000, new Date(2026, 5, 10)),
+    record('expense', '食費', -100, new Date(2026, 0, 1)),
+    record('expense', '食費', -100, new Date(2026, 8, 20)),
+    { kind: 'expense', category: '食費', amount: { ok: false, raw: 'x' }, date: { ok: true, date: new Date(2030, 0, 1) } }
+  ];
+  var r = MD.dateRangeOf(records);
+  T.assertDateEqual(r.start, new Date(2026, 0, 1));
+  T.assertDateEqual(r.end, new Date(2026, 8, 20));
+});
+
+T.test('dateRangeOf: 有効な記録が無ければnullを返す', function () {
+  T.assertEqual(MD.dateRangeOf([]), null);
+});
+
+T.test('formatYmd: YYYY/MM/DD形式で0埋めする', function () {
+  T.assertEqual(MD.formatYmd(new Date(2026, 0, 5)), '2026/01/05');
+  T.assertEqual(MD.formatYmd(new Date(2026, 11, 31)), '2026/12/31');
+});
+
 T.test('distinctYears: 出現する年を降順で返す', function () {
   var records = [
     record('income', 'CCI', 1, new Date(2025, 0, 1)),

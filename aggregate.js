@@ -107,6 +107,17 @@
     return buildSeries(scoped, dayKey);
   }
 
+  function dateRangeOf(records) {
+    var valid = filterValidRecords(records);
+    if (valid.length === 0) return null;
+    var times = valid.map(function (r) { return r.date.date.getTime(); });
+    return { start: new Date(Math.min.apply(null, times)), end: new Date(Math.max.apply(null, times)) };
+  }
+
+  function formatYmd(date) {
+    return date.getFullYear() + '/' + pad(date.getMonth() + 1) + '/' + pad(date.getDate());
+  }
+
   function distinctYears(records) {
     var years = {};
     filterValidRecords(records).forEach(function (r) { years[r.date.date.getFullYear()] = true; });
@@ -123,6 +134,8 @@
     summarize: summarize,
     seriesByMonth: seriesByMonth,
     seriesByDay: seriesByDay,
+    dateRangeOf: dateRangeOf,
+    formatYmd: formatYmd,
     distinctYears: distinctYears
   };
 });

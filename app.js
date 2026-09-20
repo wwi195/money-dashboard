@@ -86,7 +86,10 @@
 
       if (state.tab === 'all') {
         range = null;
-        title = '収支比率';
+        var dateRange = MD.dateRangeOf(state.records);
+        title = dateRange
+          ? '収支比率（' + MD.formatYmd(dateRange.start) + '〜' + MD.formatYmd(dateRange.end) + '）'
+          : '収支比率';
       } else if (state.tab === 'year') {
         range = MD.rangeForYear(state.year);
         title = state.year + '年の月別収支';
